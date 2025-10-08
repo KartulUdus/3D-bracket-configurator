@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Subtraction, Base } from '@react-three/csg'
+import { Geometry, Subtraction, Base } from '@react-three/csg'
 import * as THREE from 'three'
 import type { PlateConfig } from '../types/geometry'
 
@@ -11,7 +11,7 @@ interface PlateProps extends PlateConfig {
  * Parametric base plate with CSG holes and slot
  */
 export function Plate(props: PlateProps) {
-  const { dims, holes, slot, edgeStyle } = props
+  const { dims, holes, slot } = props
 
   // Calculate hole positions in a grid around the edges
   const holePositions = useMemo(() => {
@@ -50,60 +50,43 @@ export function Plate(props: PlateProps) {
   }, [dims, holes.count, holes.edgeOffset])
 
   return (
-    <group>
-      <Subtraction>
+    <mesh castShadow receiveShadow>
+      <Geometry>
         <Base>
-          {edgeStyle === 'fillet' ? (
-            // Rounded box for fillet
-            <mesh castShadow receiveShadow>
-              <boxGeometry args={[dims.width, dims.height, dims.thickness, 8, 8, 1]} />
-              <meshStandardMaterial 
-                color="#888" 
-                metalness={0.6} 
-                roughness={0.4}
-              />
-            </mesh>
-          ) : (
-            // Regular box
-            <mesh castShadow receiveShadow>
-              <boxGeometry args={[dims.width, dims.height, dims.thickness]} />
-              <meshStandardMaterial 
-                color="#888" 
-                metalness={0.6} 
-                roughness={0.4}
-              />
-            </mesh>
-          )}
+          <boxGeometry args={[dims.width, dims.height, dims.thickness]} />
         </Base>
         
         {/* Subtract holes */}
         {holePositions.map((pos, i) => (
-          <Subtraction key={`hole-${i}`} position={pos}>
-            <mesh>
-              <cylinderGeometry 
-                args={[
-                  holes.diameter / 2, 
-                  holes.diameter / 2, 
-                  dims.thickness * 1.1, 
-                  16
-                ]} 
-              />
-            </mesh>
+          <Subtraction key={`hole-${i}`} position={pos} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry 
+              args={[
+                holes.diameter / 2, 
+                holes.diameter / 2, 
+                dims.thickness * 1.2, 
+                16
+              ]}
+            />
           </Subtraction>
         ))}
         
         {/* Subtract slot if enabled */}
         {slot.enabled && (
           <Subtraction position={[0, 0, 0]}>
-            <mesh>
-              <boxGeometry 
-                args={[slot.length, slot.width, dims.thickness * 1.1]} 
-              />
-            </mesh>
+            <boxGeometry 
+              args={[slot.length, slot.width, dims.thickness * 1.2]} 
+            />
           </Subtraction>
         )}
-      </Subtraction>
-    </group>
+      </Geometry>
+      
+      {/* Material applied to the final CSG result */}
+      <meshStandardMaterial 
+        color="#888" 
+        metalness={0.6} 
+        roughness={0.4}
+      />
+    </mesh>
   )
 }
 
