@@ -13,6 +13,20 @@ function Scene() {
     thickness: { value: DEFAULT_PLATE_CONFIG.dims.thickness, min: 0.005, max: 0.05, step: 0.001 },
     holeCount: { value: DEFAULT_PLATE_CONFIG.holes.count, min: 2, max: 8, step: 1 },
     holeDiameter: { value: DEFAULT_PLATE_CONFIG.holes.diameter, min: 0.004, max: 0.02, step: 0.001 },
+    holeTopDiameter: { 
+      value: DEFAULT_PLATE_CONFIG.holes.topDiameter, 
+      min: 0.004, 
+      max: 0.02, 
+      step: 0.001,
+      label: 'Hole Top ⌀'
+    },
+    holeBottomDiameter: { 
+      value: DEFAULT_PLATE_CONFIG.holes.bottomDiameter, 
+      min: 0.004, 
+      max: 0.02, 
+      step: 0.001,
+      label: 'Hole Bottom ⌀'
+    },
     edgeOffset: { value: DEFAULT_PLATE_CONFIG.holes.edgeOffset, min: 0.01, max: 0.05, step: 0.001 },
     cornersFirst: { value: DEFAULT_PLATE_CONFIG.holes.cornersFirst, label: 'Corners First' },
     topFirst: { value: DEFAULT_PLATE_CONFIG.holes.topFirst, label: 'Top First' },
@@ -35,6 +49,8 @@ function Scene() {
     holes: {
       count: config.holeCount,
       diameter: config.holeDiameter,
+      topDiameter: config.holeTopDiameter,
+      bottomDiameter: config.holeBottomDiameter,
       edgeOffset: config.edgeOffset,
       cornersFirst: config.cornersFirst,
       topFirst: config.topFirst,

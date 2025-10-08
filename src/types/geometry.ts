@@ -14,6 +14,8 @@ export interface PlateDimensions {
 export interface HoleConfig {
   count: number;      // number of holes (2-8)
   diameter: number;   // meters
+  topDiameter: number;    // meters - top diameter for tapered holes
+  bottomDiameter: number; // meters - bottom diameter for tapered holes
   edgeOffset: number; // meters from edge
   cornersFirst: boolean; // if true, place holes at corners first (for 4 holes), then add to middle of sides
   topFirst: boolean;     // if true, start placement from top, otherwise from bottom
@@ -46,6 +48,8 @@ export const DEFAULT_PLATE_CONFIG: PlateConfig = {
   holes: {
     count: 4,
     diameter: 0.008, // 8mm
+    topDiameter: 0.008, // 8mm - default same as diameter
+    bottomDiameter: 0.008, // 8mm - default same as diameter
     edgeOffset: 0.015, // 15mm
     cornersFirst: true,
     topFirst: true,

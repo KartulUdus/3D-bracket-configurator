@@ -97,8 +97,8 @@ export function Plate(props: PlateProps) {
           <Subtraction key={`hole-${i}`} position={pos} rotation={[Math.PI / 2, 0, 0]}>
             <cylinderGeometry 
               args={[
-                holes.diameter / 2, 
-                holes.diameter / 2, 
+                holes.topDiameter / 2, 
+                holes.bottomDiameter / 2, 
                 dims.thickness * 1.2, 
                 16
               ]}
