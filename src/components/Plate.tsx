@@ -87,6 +87,20 @@ export function Plate(props: PlateProps) {
     return new THREE.BoxGeometry(dims.width, dims.height, dims.thickness)
   }, [dims, edgeStyle, edgeRadius])
 
+  // Create slot geometry with rounded edges
+  // Increase dimensions by 2x edgeRadius to maintain minimum slot size
+  // Use extra thickness (2.5x) to ensure clean CSG subtraction at any plate thickness
+  const slotGeometry = useMemo(() => {
+    const slotEdgeRadius = edgeRadius * 0.7
+    return new RoundedBoxGeometry(
+      slotEdgeRadius * 2 + slot.length,
+      slotEdgeRadius * 2 + slot.width,
+      dims.thickness * 2,
+      4, // segments
+      slotEdgeRadius
+    )
+  }, [slot.length, slot.width, dims.thickness, edgeRadius])
+
   return (
     <mesh castShadow receiveShadow>
       <Geometry>
@@ -108,11 +122,7 @@ export function Plate(props: PlateProps) {
         
         {/* Subtract slot if enabled */}
         {slot.enabled && (
-          <Subtraction position={[0, 0, 0]}>
-            <boxGeometry 
-              args={[slot.length, slot.width, dims.thickness * 1.2]} 
-            />
-          </Subtraction>
+          <Subtraction position={[0, 0, dims.thickness / 2]} geometry={slotGeometry} />
         )}
       </Geometry>
       
