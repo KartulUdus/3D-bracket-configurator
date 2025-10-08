@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, AdaptiveDpr, Bounds } from '@react-three/drei'
+import { OrbitControls, AdaptiveDpr, AdaptiveEvents, Bounds } from '@react-three/drei'
 import { Leva, useControls } from 'leva'
 import { Plate } from './components/Plate'
 import { DEFAULT_PLATE_CONFIG } from './types/geometry'
@@ -86,8 +86,8 @@ function Scene() {
         rotateSpeed={0.5}
         zoomSpeed={0.8}
         touches={{
-          ONE: 2, // TOUCH_ROTATE
-          TWO: 1  // TOUCH_PAN
+          ONE: 0, // TOUCH.ROTATE - one finger rotates
+          TWO: 2  // TOUCH.DOLLY_PAN - two fingers zoom/pan
         }}
       />
     </>
@@ -105,20 +105,32 @@ function App() {
       </header>
       
       {/* 3D Canvas */}
-      <div className="canvas-wrap h-full w-full">
+      <div className="canvas-wrap h-full w-full" style={{ touchAction: 'none' }}>
         <Canvas
           shadows
           dpr={[1, Math.min(2, window.devicePixelRatio)]}
           gl={{ antialias: true, powerPreference: 'high-performance' }}
           camera={{ position: [2, 2, 2], fov: 50 }}
+          style={{ touchAction: 'none' }}
         >
           <AdaptiveDpr pixelated />
+          <AdaptiveEvents />
           <Scene />
         </Canvas>
       </div>
       
       {/* Leva Controls */}
-      <Leva collapsed={false} />
+      <Leva 
+        collapsed={true}
+        theme={{
+          sizes: {
+            rootWidth: '280px',
+          }
+        }}
+        titleBar={{
+          position: { x: 0, y: 50 }
+        }}
+      />
     </div>
   )
 }

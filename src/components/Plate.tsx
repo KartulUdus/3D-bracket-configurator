@@ -47,7 +47,7 @@ export function Plate(props: PlateProps) {
     }
     
     return positions
-  }, [dims, holes.count, holes.edgeOffset])
+  }, [dims, holes])
 
   return (
     <mesh castShadow receiveShadow>
