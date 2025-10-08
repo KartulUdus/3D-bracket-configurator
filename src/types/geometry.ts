@@ -15,6 +15,8 @@ export interface HoleConfig {
   count: number;      // number of holes (2-8)
   diameter: number;   // meters
   edgeOffset: number; // meters from edge
+  cornersFirst: boolean; // if true, place holes at corners first (for 4 holes), then add to middle of sides
+  topFirst: boolean;     // if true, start placement from top, otherwise from bottom
 }
 
 export interface SlotConfig {
@@ -45,6 +47,8 @@ export const DEFAULT_PLATE_CONFIG: PlateConfig = {
     count: 4,
     diameter: 0.008, // 8mm
     edgeOffset: 0.015, // 15mm
+    cornersFirst: true,
+    topFirst: true,
   },
   slot: {
     enabled: true,

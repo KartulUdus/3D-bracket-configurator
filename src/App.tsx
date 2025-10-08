@@ -14,6 +14,8 @@ function Scene() {
     holeCount: { value: DEFAULT_PLATE_CONFIG.holes.count, min: 2, max: 8, step: 1 },
     holeDiameter: { value: DEFAULT_PLATE_CONFIG.holes.diameter, min: 0.004, max: 0.02, step: 0.001 },
     edgeOffset: { value: DEFAULT_PLATE_CONFIG.holes.edgeOffset, min: 0.01, max: 0.05, step: 0.001 },
+    cornersFirst: { value: DEFAULT_PLATE_CONFIG.holes.cornersFirst, label: 'Corners First' },
+    topFirst: { value: DEFAULT_PLATE_CONFIG.holes.topFirst, label: 'Top First' },
     slotEnabled: DEFAULT_PLATE_CONFIG.slot.enabled,
     slotLength: { value: DEFAULT_PLATE_CONFIG.slot.length, min: 0.02, max: 0.15, step: 0.01 },
     slotWidth: { value: DEFAULT_PLATE_CONFIG.slot.width, min: 0.005, max: 0.03, step: 0.001 },
@@ -34,6 +36,8 @@ function Scene() {
       count: config.holeCount,
       diameter: config.holeDiameter,
       edgeOffset: config.edgeOffset,
+      cornersFirst: config.cornersFirst,
+      topFirst: config.topFirst,
     },
     slot: {
       enabled: config.slotEnabled,
