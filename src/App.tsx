@@ -10,7 +10,7 @@ function Scene() {
   const [config, set] = useControls(() => ({
     width: { value: DEFAULT_PLATE_CONFIG.dims.width, min: 0.1, max: 0.5, step: 0.01 },
     height: { value: DEFAULT_PLATE_CONFIG.dims.height, min: 0.1, max: 0.5, step: 0.01 },
-    thickness: { value: DEFAULT_PLATE_CONFIG.dims.thickness, min: 0.005, max: 0.05, step: 0.001 },
+    thickness: { value: DEFAULT_PLATE_CONFIG.dims.thickness, min: 0.01, max: 0.05, step: 0.0001 },
     holeCount: { value: DEFAULT_PLATE_CONFIG.holes.count, min: 2, max: 8, step: 1 },
     holeDiameter: { value: DEFAULT_PLATE_CONFIG.holes.diameter, min: 0.004, max: 0.02, step: 0.001 },
     holeTopDiameter: { 
@@ -36,7 +36,7 @@ function Scene() {
     topFirst: { value: DEFAULT_PLATE_CONFIG.holes.topFirst, label: 'Top First' },
     slotEnabled: DEFAULT_PLATE_CONFIG.slot.enabled,
     slotLength: { value: DEFAULT_PLATE_CONFIG.slot.length, min: 0.02, max: 0.15, step: 0.01 },
-    slotWidth: { value: DEFAULT_PLATE_CONFIG.slot.width, min: 0.005, max: 0.03, step: 0.001 },
+    slotWidth: { value: DEFAULT_PLATE_CONFIG.slot.width, min: 0.005, max: 0.035, step: 0.001 },
     edgeStyle: { 
       value: DEFAULT_PLATE_CONFIG.edgeStyle, 
       options: ['none', 'chamfer', 'fillet'] as EdgeStyle[]

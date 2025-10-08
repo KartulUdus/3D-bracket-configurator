@@ -95,7 +95,7 @@ export function Plate(props: PlateProps) {
     return new RoundedBoxGeometry(
       slotEdgeRadius * 2 + slot.length,
       slotEdgeRadius * 2 + slot.width,
-      dims.thickness * 2,
+      dims.thickness * 2.00001,
       4, // segments
       slotEdgeRadius
     )
