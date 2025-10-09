@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, AdaptiveDpr, AdaptiveEvents, Bounds } from '@react-three/drei'
 import { Leva, useControls, button } from 'leva'
@@ -128,10 +128,31 @@ function Scene({ plateRef }: SceneProps) {
   }))
 
   // Convert mm to meters for Three.js
+  // Safely extract values with fallbacks (Leva button breaks type inference)
+  const configAny = config as any
+  const width = configAny.width ?? DEFAULT_PLATE_CONFIG_MM.dims.width
+  const height = configAny.height ?? DEFAULT_PLATE_CONFIG_MM.dims.height
+  const slotLength = configAny.slotLength ?? DEFAULT_PLATE_CONFIG_MM.slot.length
+  const slotWidth = configAny.slotWidth ?? DEFAULT_PLATE_CONFIG_MM.slot.width
+
+  // Apply slot size constraints (with 10mm clearance)
+  useEffect(() => {
+    const maxSlotLength = width - 10
+    const maxSlotWidth = height - 10
+    
+    if (slotLength > maxSlotLength && maxSlotLength >= 10) {
+      set({ slotLength: Math.max(10, maxSlotLength) })
+    }
+    
+    if (slotWidth > maxSlotWidth && maxSlotWidth >= 2) {
+      set({ slotWidth: Math.max(2, maxSlotWidth) })
+    }
+  }, [width, height, slotLength, slotWidth, set])
+  
   const plateConfig = {
     dims: {
-      width: config.width / 1000,
-      height: config.height / 1000,
+      width: width / 1000,
+      height: height / 1000,
       thickness: config.thickness / 1000,
     },
     holes: {
@@ -145,8 +166,8 @@ function Scene({ plateRef }: SceneProps) {
     },
     slot: {
       enabled: config.slotEnabled,
-      length: config.slotLength / 1000,
-      width: config.slotWidth / 1000,
+      length: slotLength / 1000,
+      width: slotWidth / 1000,
     },
     edgeStyle: config.edgeStyle,
     edgeRadius: config.edgeRadius / 1000,
