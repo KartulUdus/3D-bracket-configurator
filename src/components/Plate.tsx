@@ -1,4 +1,4 @@
-import { useMemo, Suspense } from 'react'
+import { useMemo, Suspense, useRef, useImperativeHandle, forwardRef } from 'react'
 import { Geometry, Subtraction, Base } from '@react-three/csg'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
@@ -10,11 +10,15 @@ interface PlateProps extends PlateConfig {
   onGeometryReady?: (geometry: THREE.BufferGeometry) => void;
 }
 
+export interface PlateRef {
+  getMesh: () => THREE.Mesh | null;
+}
+
 /**
  * Parametric base plate with CSG holes and slot
  */
-function PlateGeometry(props: PlateProps) {
-  const { dims, holes, slot, edgeStyle, edgeRadius, materialKey } = props
+function PlateGeometry(props: PlateProps & { meshRef: React.RefObject<THREE.Mesh | null> }) {
+  const { dims, holes, slot, edgeStyle, edgeRadius, materialKey, meshRef } = props
   
   // Get renderer for texture anisotropy configuration
   const { gl } = useThree()
@@ -110,7 +114,7 @@ function PlateGeometry(props: PlateProps) {
   }, [slot.length, slot.width, dims.thickness, edgeRadius])
 
   return (
-    <mesh castShadow receiveShadow>
+    <mesh ref={meshRef} castShadow receiveShadow>
       <Geometry>
         <Base geometry={baseGeometry} />
         
@@ -144,7 +148,14 @@ function PlateGeometry(props: PlateProps) {
 /**
  * Plate wrapper with Suspense for texture loading
  */
-export function Plate(props: PlateProps) {
+export const Plate = forwardRef<PlateRef, PlateProps>((props, ref) => {
+  const meshRef = useRef<THREE.Mesh>(null)
+
+  // Expose methods to parent via ref
+  useImperativeHandle(ref, () => ({
+    getMesh: () => meshRef.current,
+  }))
+
   return (
     <Suspense fallback={
       <mesh castShadow receiveShadow>
@@ -152,8 +163,8 @@ export function Plate(props: PlateProps) {
         <meshStandardMaterial color="#888" />
       </mesh>
     }>
-      <PlateGeometry {...props} />
+      <PlateGeometry {...props} meshRef={meshRef} />
     </Suspense>
   )
-}
+})
 

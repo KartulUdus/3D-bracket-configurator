@@ -1,12 +1,18 @@
+import { useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, AdaptiveDpr, AdaptiveEvents, Bounds } from '@react-three/drei'
 import { Leva, useControls } from 'leva'
-import { Plate } from './components/Plate'
+import { Plate, type PlateRef } from './components/Plate'
+import { ExportDialog } from './components/ExportDialog'
 import { DEFAULT_PLATE_CONFIG } from './types/geometry'
 import type { EdgeStyle } from './types/geometry'
 import { getMaterialOptions } from './materials/useMaterials'
 
-function Scene() {
+interface SceneProps {
+  plateRef: React.RefObject<PlateRef | null>
+}
+
+function Scene({ plateRef }: SceneProps) {
   // Leva controls for all plate parameters
   const config = useControls({
     // Material
@@ -99,7 +105,7 @@ function Scene() {
       
       {/* Bounds: auto-frame the model */}
       <Bounds fit clip observe margin={1.2}>
-        <Plate {...plateConfig} />
+        <Plate ref={plateRef} {...plateConfig} />
       </Bounds>
       
       {/* Ground plane */}
@@ -130,12 +136,19 @@ function Scene() {
 }
 
 function App() {
+  const plateRef = useRef<PlateRef>(null)
+
+  const handleGetMesh = () => {
+    return plateRef.current?.getMesh() || null
+  }
+
   return (
     <div className="relative h-screen w-full">
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-10 bg-background/80 backdrop-blur-sm border-b">
-        <div className="container mx-auto px-4 py-3">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <h1 className="text-xl font-bold">Bracket Configurator</h1>
+          <ExportDialog onGetMesh={handleGetMesh} />
         </div>
       </header>
       
@@ -150,7 +163,7 @@ function App() {
         >
           <AdaptiveDpr pixelated />
           <AdaptiveEvents />
-          <Scene />
+          <Scene plateRef={plateRef} />
         </Canvas>
       </div>
       
