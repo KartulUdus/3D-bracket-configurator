@@ -129,11 +129,12 @@ function Scene({ plateRef }: SceneProps) {
 
   // Convert mm to meters for Three.js
   // Safely extract values with fallbacks (Leva button breaks type inference)
-  const configAny = config as any
-  const width = configAny.width ?? DEFAULT_PLATE_CONFIG_MM.dims.width
-  const height = configAny.height ?? DEFAULT_PLATE_CONFIG_MM.dims.height
-  const slotLength = configAny.slotLength ?? DEFAULT_PLATE_CONFIG_MM.slot.length
-  const slotWidth = configAny.slotWidth ?? DEFAULT_PLATE_CONFIG_MM.slot.width
+  type LevaConfig = Record<string, unknown>
+  const typedConfig = config as LevaConfig
+  const width = (typedConfig.width as number | undefined) ?? DEFAULT_PLATE_CONFIG_MM.dims.width
+  const height = (typedConfig.height as number | undefined) ?? DEFAULT_PLATE_CONFIG_MM.dims.height
+  const slotLength = (typedConfig.slotLength as number | undefined) ?? DEFAULT_PLATE_CONFIG_MM.slot.length
+  const slotWidth = (typedConfig.slotWidth as number | undefined) ?? DEFAULT_PLATE_CONFIG_MM.slot.width
 
   // Apply slot size constraints (with 10mm clearance)
   useEffect(() => {
