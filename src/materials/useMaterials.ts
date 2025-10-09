@@ -34,8 +34,8 @@ export const MATERIALS: readonly MaterialPreset[] = [
       displacement: '/textures/Metal003_4K-JPG/Metal003_4K_Displacement.ktx2',
     },
     props: {
-      metalness: 0.4,
-      roughness: 0.9,
+      metalness: 0.2,
+      roughness: 0.4,
     },
   },
   {
@@ -48,7 +48,7 @@ export const MATERIALS: readonly MaterialPreset[] = [
       displacement: '/textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_Displacement.ktx2',
     },
     props: {
-      metalness: 0.3,
+      metalness: 0.1,
       roughness: 0.4,
     },
   },
@@ -62,7 +62,7 @@ export const MATERIALS: readonly MaterialPreset[] = [
       displacement: '/textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_Displacement.ktx2',
     },
     props: {
-      metalness: 0.9,
+      metalness: 0.5,
       roughness: 0.2,
     },
   },
