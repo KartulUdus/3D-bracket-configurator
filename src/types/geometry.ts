@@ -38,29 +38,31 @@ export interface PlateConfig {
 
 /**
  * Default configuration for the base plate
+ * Values in millimeters for UI (converted to meters for Three.js)
  */
-export const DEFAULT_PLATE_CONFIG: PlateConfig = {
+export const DEFAULT_PLATE_CONFIG_MM = {
   dims: {
-    width: 0.2,      // 200mm
-    height: 0.15,    // 150mm
-    thickness: 0.01, // 10mm
+    width: 200,      // mm
+    height: 150,     // mm
+    thickness: 10,   // mm
   },
   holes: {
     count: 4,
-    diameter: 0.008, // 8mm
-    topDiameter: 0.008, // 8mm - default same as diameter
-    bottomDiameter: 0.008, // 8mm - default same as diameter
-    edgeOffset: 0.015, // 15mm
+    diameter: 8,     // mm
+    topDiameter: 8,  // mm
+    bottomDiameter: 8, // mm
+    edgeOffset: 15,  // mm
     cornersFirst: true,
     topFirst: true,
   },
   slot: {
     enabled: true,
-    length: 0.06,    // 60mm
-    width: 0.01,     // 10mm
+    length: 60,      // mm
+    width: 10,       // mm
   },
-  edgeStyle: 'fillet',
-  edgeRadius: 0.003, // 3mm
+  edgeStyle: 'fillet' as EdgeStyle,
+  edgeRadius: 3,     // mm
   materialKey: 'brushed_metal',
 };
+
 
