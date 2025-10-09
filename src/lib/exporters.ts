@@ -6,7 +6,7 @@
 import { STLExporter } from 'three/examples/jsm/exporters/STLExporter.js'
 import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter.js'
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js'
-import type * as THREE from 'three'
+import * as THREE from 'three'
 
 export const EXPORT_FORMATS = ['stl', 'obj', 'glb'] as const
 export type ExportFormat = typeof EXPORT_FORMATS[number]
@@ -16,13 +16,29 @@ export interface ExportOptions {
   filename: string
 }
 
+function meshForExport(obj: THREE.Object3D): THREE.Mesh {
+  // Expect the parent <mesh> that holds the final CSG result
+  const m = obj as THREE.Mesh;
+  if (!(m && m.isMesh && m.geometry)) throw new Error('Pass the final CSG mesh');
+
+  const g = (m.geometry as THREE.BufferGeometry).clone();
+  m.updateWorldMatrix(true, false);
+  g.applyMatrix4(m.matrixWorld);        // bake world transform
+  g.computeVertexNormals();             // clean normals
+
+  const clean = new THREE.Mesh(g);
+  clean.matrixAutoUpdate = false;       // keep baked transform
+  return clean;
+}
+
 /**
  * Export a Three.js object as STL (binary)
  * STL is common for 3D printing and uses meters for units
  */
 export function exportSTL(object: THREE.Object3D): Blob {
+  const cleanMesh = meshForExport(object)
   const exporter = new STLExporter()
-  const result = exporter.parse(object, { binary: true })
+  const result = exporter.parse(cleanMesh, { binary: true })
   // Convert DataView to ArrayBuffer if needed
   const arrayBuffer = result instanceof DataView ? result.buffer : result as ArrayBuffer
   return new Blob([arrayBuffer], { type: 'model/stl' })
@@ -33,8 +49,9 @@ export function exportSTL(object: THREE.Object3D): Blob {
  * OBJ is a simple mesh format, widely supported
  */
 export function exportOBJ(object: THREE.Object3D): Blob {
+  const cleanMesh = meshForExport(object)
   const exporter = new OBJExporter()
-  const text = exporter.parse(object)
+  const text = exporter.parse(cleanMesh)
   return new Blob([text], { type: 'text/plain' })
 }
 
@@ -43,10 +60,11 @@ export function exportOBJ(object: THREE.Object3D): Blob {
  * GLTF is modern, supports materials/textures, good for sharing and viewing
  */
 export function exportGLB(object: THREE.Object3D): Promise<Blob> {
+  const cleanMesh = meshForExport(object)
   const exporter = new GLTFExporter()
   return new Promise((resolve, reject) => {
     exporter.parse(
-      object,
+      cleanMesh,
       (result) => {
         // When binary: true, result is ArrayBuffer
         if (result instanceof ArrayBuffer) {
