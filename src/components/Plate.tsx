@@ -121,7 +121,7 @@ function PlateGeometry(props: PlateProps) {
               args={[
                 holes.topDiameter / 2, 
                 holes.bottomDiameter / 2, 
-                dims.thickness * 1.2, 
+                dims.thickness * 1.5, // Increased from 1.2 to ensure clean cuts through edges
                 16
               ]}
             />
@@ -135,7 +135,8 @@ function PlateGeometry(props: PlateProps) {
       </Geometry>
       
       {/* Material with textures applied to the final CSG result */}
-      <meshStandardMaterial {...materialProps} />
+      {/* DoubleSide rendering prevents see-through gaps at CSG edges/corners */}
+      <meshStandardMaterial {...materialProps} side={THREE.DoubleSide} />
     </mesh>
   )
 }
