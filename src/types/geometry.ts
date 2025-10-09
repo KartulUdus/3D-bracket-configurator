@@ -61,6 +61,6 @@ export const DEFAULT_PLATE_CONFIG: PlateConfig = {
   },
   edgeStyle: 'fillet',
   edgeRadius: 0.003, // 3mm
-  materialKey: 'steel',
+  materialKey: 'brushed_metal',
 };
 

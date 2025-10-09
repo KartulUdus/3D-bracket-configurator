@@ -1,8 +1,10 @@
-import { useMemo } from 'react'
+import { useMemo, Suspense } from 'react'
 import { Geometry, Subtraction, Base } from '@react-three/csg'
+import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import type { PlateConfig } from '../types/geometry'
+import { useMaterials, type MaterialKey } from '../materials/useMaterials'
 
 interface PlateProps extends PlateConfig {
   onGeometryReady?: (geometry: THREE.BufferGeometry) => void;
@@ -11,8 +13,14 @@ interface PlateProps extends PlateConfig {
 /**
  * Parametric base plate with CSG holes and slot
  */
-export function Plate(props: PlateProps) {
-  const { dims, holes, slot, edgeStyle, edgeRadius } = props
+function PlateGeometry(props: PlateProps) {
+  const { dims, holes, slot, edgeStyle, edgeRadius, materialKey } = props
+  
+  // Get renderer for texture anisotropy configuration
+  const { gl } = useThree()
+  
+  // Load material textures and properties
+  const { materialProps } = useMaterials(materialKey as MaterialKey, gl)
 
   // Calculate hole positions based on count and placement preferences
   const holePositions = useMemo(() => {
@@ -126,13 +134,25 @@ export function Plate(props: PlateProps) {
         )}
       </Geometry>
       
-      {/* Material applied to the final CSG result */}
-      <meshStandardMaterial 
-        color="#888" 
-        metalness={0.6} 
-        roughness={0.4}
-      />
+      {/* Material with textures applied to the final CSG result */}
+      <meshStandardMaterial {...materialProps} />
     </mesh>
+  )
+}
+
+/**
+ * Plate wrapper with Suspense for texture loading
+ */
+export function Plate(props: PlateProps) {
+  return (
+    <Suspense fallback={
+      <mesh castShadow receiveShadow>
+        <boxGeometry args={[props.dims.width, props.dims.height, props.dims.thickness]} />
+        <meshStandardMaterial color="#888" />
+      </mesh>
+    }>
+      <PlateGeometry {...props} />
+    </Suspense>
   )
 }
 

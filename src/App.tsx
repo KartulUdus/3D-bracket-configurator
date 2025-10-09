@@ -1,16 +1,27 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, AdaptiveDpr, AdaptiveEvents, Bounds } from '@react-three/drei'
-import { Leva, useControls, button } from 'leva'
+import { Leva, useControls } from 'leva'
 import { Plate } from './components/Plate'
 import { DEFAULT_PLATE_CONFIG } from './types/geometry'
 import type { EdgeStyle } from './types/geometry'
+import { getMaterialOptions } from './materials/useMaterials'
 
 function Scene() {
-  // Basic Leva controls for testing Increment 2
-  const [config, set] = useControls(() => ({
+  // Leva controls for all plate parameters
+  const config = useControls({
+    // Material
+    material: { 
+      value: DEFAULT_PLATE_CONFIG.materialKey, 
+      options: getMaterialOptions(),
+      label: 'Material'
+    },
+    
+    // Dimensions
     width: { value: DEFAULT_PLATE_CONFIG.dims.width, min: 0.1, max: 0.5, step: 0.01 },
     height: { value: DEFAULT_PLATE_CONFIG.dims.height, min: 0.1, max: 0.5, step: 0.01 },
     thickness: { value: DEFAULT_PLATE_CONFIG.dims.thickness, min: 0.01, max: 0.05, step: 0.0001 },
+    
+    // Holes
     holeCount: { value: DEFAULT_PLATE_CONFIG.holes.count, min: 2, max: 8, step: 1 },
     holeDiameter: { value: DEFAULT_PLATE_CONFIG.holes.diameter, min: 0.004, max: 0.02, step: 0.001 },
     holeTopDiameter: { 
@@ -27,22 +38,22 @@ function Scene() {
       step: 0.001,
       label: 'Hole Bottom ⌀'
     },
-    '= Min ⌀': button((get) => {
-      const minDiameter = Math.min(get('holeTopDiameter'), get('holeBottomDiameter'))
-      set({ holeTopDiameter: minDiameter, holeBottomDiameter: minDiameter })
-    }),
     edgeOffset: { value: DEFAULT_PLATE_CONFIG.holes.edgeOffset, min: 0.01, max: 0.05, step: 0.001 },
     cornersFirst: { value: DEFAULT_PLATE_CONFIG.holes.cornersFirst, label: 'Corners First' },
     topFirst: { value: DEFAULT_PLATE_CONFIG.holes.topFirst, label: 'Top First' },
+    
+    // Slot
     slotEnabled: DEFAULT_PLATE_CONFIG.slot.enabled,
     slotLength: { value: DEFAULT_PLATE_CONFIG.slot.length, min: 0.02, max: 0.15, step: 0.01 },
     slotWidth: { value: DEFAULT_PLATE_CONFIG.slot.width, min: 0.005, max: 0.035, step: 0.001 },
+    
+    // Edges
     edgeStyle: { 
       value: DEFAULT_PLATE_CONFIG.edgeStyle, 
       options: ['none', 'chamfer', 'fillet'] as EdgeStyle[]
     },
     edgeRadius: { value: DEFAULT_PLATE_CONFIG.edgeRadius, min: 0.001, max: 0.01, step: 0.0005 },
-  }))
+  })
 
   const plateConfig = {
     dims: {
@@ -66,7 +77,7 @@ function Scene() {
     },
     edgeStyle: config.edgeStyle,
     edgeRadius: config.edgeRadius,
-    materialKey: 'steel',
+    materialKey: config.material,
   }
 
   return (
