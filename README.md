@@ -105,8 +105,9 @@ The app is optimized for mobile devices:
 - 3D scene & controls: 4 hours
 - 4K texture compression - 1 Hour
 - Model subtractive geometry edge rounding - 3 Hours
-- Model export functionality - 2 hours
+- Model export functionality - 2 Hours
 - Styling & responsive layout: 1 Hour
+- Deployment github action to github pages - 1 Hour
 - Documentation: 1 Hour
 
 ## License
