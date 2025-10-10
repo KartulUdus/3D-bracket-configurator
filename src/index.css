@@ -69,9 +69,7 @@ body {
   overscroll-behavior: contain;
 }
 
-/* Leva menu positioning - top right below header */
-.leva-c {
-  top: 60px !important;
-  right: 10px !important;
-  left: auto !important;
+.leva-left {
+  left: 0 !important;
+  right: auto !important;
 }

@@ -43,7 +43,7 @@ function App() {
         collapsed={true}
         theme={{
           sizes: {
-            rootWidth: '280px',
+            rootWidth: '350px',
           }
         }}
         titleBar={{
