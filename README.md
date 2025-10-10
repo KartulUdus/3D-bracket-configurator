@@ -104,8 +104,8 @@ The app is optimized for mobile devices:
 - Project setup & configuration: 2 hours
 - 3D scene & controls: 4 hours
 - Model subtractive geometry edge rounding - 3 hours
-- Model export functionality - 3 hours
-- Styling & responsive layout: 2 Hours
+- Model export functionality - 2 hours
+- Styling & responsive layout: 1 Hours
 - Documentation: 1 Hour
 
 ## License
