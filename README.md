@@ -99,21 +99,14 @@ The app is optimized for mobile devices:
 
 ## Development Time
 
-**Total**: ~2 hours
+**Total**: ~16 hours
 
-- Project setup & configuration: 30 min
-- 3D scene & controls: 45 min
-- Styling & responsive layout: 30 min
-- Documentation: 15 min
-
-## Next Steps
-
-Refer to `Docs/roadmap.md` for the full development roadmap including:
-- Parametric base plate with CSG operations
-- Material/texture system
-- Units conversion (mm/cm/m/in)
-- Export functionality (STL/OBJ/GLTF)
-- GitHub Pages deployment
+- Project setup & configuration: 2 hours
+- 3D scene & controls: 4 hours
+- Model subtractive geometry edge rounding - 3 hours
+- Model export functionality - 3 hours
+- Styling & responsive layout: 2 Hours
+- Documentation: 1 Hour
 
 ## License
 
