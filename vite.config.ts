@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ mode }) => ({
   // Use base path only for production builds (GitHub Pages)
-  base: command === 'build' ? '/wentureIoTest/' : '/',
+  base: mode === 'production' ? '/3D-bracket-configurator/' : '/',
   plugins: [react()],
   resolve: {
     alias: {
