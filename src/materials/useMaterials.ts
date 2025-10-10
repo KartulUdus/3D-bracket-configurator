@@ -22,16 +22,18 @@ export interface MaterialPreset {
  * Material presets with texture paths
  * 3 Metal materials + 3 Wood materials
  */
+const BASE_URL = import.meta.env.BASE_URL
+
 export const MATERIALS: readonly MaterialPreset[] = [
   // Metal Materials (Default: Brushed Metal)
   {
     key: 'brushed_metal',
     label: 'Brushed Metal',
     maps: {
-      color: '/textures/Metal003_4K-JPG/Metal003_4K_Color.ktx2',
-      normal: '/textures/Metal003_4K-JPG/Metal003_4K_NormalGL.ktx2',
-      orm: '/textures/Metal003_4K-JPG/Metal003_4K_packed_ORM.ktx2',
-      displacement: '/textures/Metal003_4K-JPG/Metal003_4K_Displacement.ktx2',
+      color: `${BASE_URL}textures/Metal003_4K-JPG/Metal003_4K_Color.ktx2`,
+      normal: `${BASE_URL}textures/Metal003_4K-JPG/Metal003_4K_NormalGL.ktx2`,
+      orm: `${BASE_URL}textures/Metal003_4K-JPG/Metal003_4K_packed_ORM.ktx2`,
+      displacement: `${BASE_URL}textures/Metal003_4K-JPG/Metal003_4K_Displacement.ktx2`,
     },
     props: {
       metalness: 0.2,
@@ -42,10 +44,10 @@ export const MATERIALS: readonly MaterialPreset[] = [
     key: 'diamond_plate',
     label: 'Diamond Plate',
     maps: {
-      color: '/textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_Color.ktx2',
-      normal: '/textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_NormalGL.ktx2',
-      orm: '/textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_packed_ORM.ktx2',
-      displacement: '/textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_Displacement.ktx2',
+      color: `${BASE_URL}textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_Color.ktx2`,
+      normal: `${BASE_URL}textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_NormalGL.ktx2`,
+      orm: `${BASE_URL}textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_packed_ORM.ktx2`,
+      displacement: `${BASE_URL}textures/DiamondPlate006D_4K-JPG/DiamondPlate006D_4K_Displacement.ktx2`,
     },
     props: {
       metalness: 0.1,
@@ -56,10 +58,10 @@ export const MATERIALS: readonly MaterialPreset[] = [
     key: 'painted_metal',
     label: 'Painted Metal',
     maps: {
-      color: '/textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_Color.ktx2',
-      normal: '/textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_NormalGL.ktx2',
-      orm: '/textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_packed_ORM.ktx2',
-      displacement: '/textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_Displacement.ktx2',
+      color: `${BASE_URL}textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_Color.ktx2`,
+      normal: `${BASE_URL}textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_NormalGL.ktx2`,
+      orm: `${BASE_URL}textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_packed_ORM.ktx2`,
+      displacement: `${BASE_URL}textures/PaintedMetal001_4K-JPG/PaintedMetal001_4K_Displacement.ktx2`,
     },
     props: {
       metalness: 0.5,
@@ -71,10 +73,10 @@ export const MATERIALS: readonly MaterialPreset[] = [
     key: 'oak',
     label: 'American Oak',
     maps: {
-      color: '/textures/american_oak_2-4K/4K-american_oak_2_basecolor.ktx2',
-      normal: '/textures/american_oak_2-4K/4K-american_oak_2_normal.ktx2',
-      orm: '/textures/american_oak_2-4K/4K-american_oak_2_packed_ORM.ktx2',
-      displacement: '/textures/american_oak_2-4K/4K-american_oak_2_height.ktx2',
+      color: `${BASE_URL}textures/american_oak_2-4K/4K-american_oak_2_basecolor.ktx2`,
+      normal: `${BASE_URL}textures/american_oak_2-4K/4K-american_oak_2_normal.ktx2`,
+      orm: `${BASE_URL}textures/american_oak_2-4K/4K-american_oak_2_packed_ORM.ktx2`,
+      displacement: `${BASE_URL}textures/american_oak_2-4K/4K-american_oak_2_height.ktx2`,
     },
     props: {
       metalness: 0.0,
@@ -85,9 +87,9 @@ export const MATERIALS: readonly MaterialPreset[] = [
     key: 'walnut',
     label: 'American Walnut',
     maps: {
-      color: '/textures/american_walnut_1-4K/4K-american_walnut_1_basecolor.ktx2',
-      normal: '/textures/american_walnut_1-4K/4K-american_walnut_1_normal.ktx2',
-      orm: '/textures/american_walnut_1-4K/4K-american_walnut_1_packed_ORM.ktx2',
+      color: `${BASE_URL}textures/american_walnut_1-4K/4K-american_walnut_1_basecolor.ktx2`,
+      normal: `${BASE_URL}textures/american_walnut_1-4K/4K-american_walnut_1_normal.ktx2`,
+      orm: `${BASE_URL}textures/american_walnut_1-4K/4K-american_walnut_1_packed_ORM.ktx2`,
     },
     props: {
       metalness: 0.0,
@@ -98,10 +100,10 @@ export const MATERIALS: readonly MaterialPreset[] = [
     key: 'wood',
     label: 'Wood Planks',
     maps: {
-      color: '/textures/Wood050_4K-JPG/Wood050_4K_Color.ktx2',
-      normal: '/textures/Wood050_4K-JPG/Wood050_4K_NormalGL.ktx2',
-      orm: '/textures/Wood050_4K-JPG/Wood050_4K_packed_ORM.ktx2',
-      displacement: '/textures/Wood050_4K-JPG/Wood050_4K_Displacement.ktx2',
+      color: `${BASE_URL}textures/Wood050_4K-JPG/Wood050_4K_Color.ktx2`,
+      normal: `${BASE_URL}textures/Wood050_4K-JPG/Wood050_4K_NormalGL.ktx2`,
+      orm: `${BASE_URL}textures/Wood050_4K-JPG/Wood050_4K_packed_ORM.ktx2`,
+      displacement: `${BASE_URL}textures/Wood050_4K-JPG/Wood050_4K_Displacement.ktx2`,
     },
     props: {
       metalness: 0.0,
